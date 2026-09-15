@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Port Russell - Utilisateurs</title>
+</head>
+<body>
+    <h1>Gestion des Utilisateurs</h1>
+    <a href="/dashboard">Retour au tableau de bord</a>
+    <br><br>
+
+    <!-- FORMULAIRE D'AJOUT -->
+    <h3>Ajouter un Utilisateur</h3>
+    <form action="/api/auth/users" method="POST">
+        <input type="text" name="username" placeholder="Nom d'utilisateur" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Mot de passe" required>
+        <button type="submit">Créer</button>
+    </form>
+    <br>
+
+    <!-- TABLEAU DES UTILISATEURS -->
+    <% if (users.length === 0) { %>
+        <p>Aucun utilisateur trouvé.</p>
+    <% } else { %>
+        <table border="1" cellpadding="8" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Nom d'utilisateur</th>
+                    <th>Email</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% users.forEach(user => { %>
+                    <tr>
+                        <td><%= user.username || user.name %></td>
+                        <td><%= user.email %></td>
+                        <td>
+                            <form action="/api/auth/users/<%= user._id %>?_method=DELETE" method="POST" style="display:inline;">
+                                <button type="submit">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    <% } %>
+</body>
+</html>
+

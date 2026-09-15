@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Port Russell - Réservations</title>
+</head>
+<body>
+    <h1>Gestion des Réservations</h1>
+    <a href="/dashboard">Retour au tableau de bord</a>
+    <br><br>
+
+    <!-- FORMULAIRE D'AJOUT -->
+    <h3>Ajouter une Réservation</h3>
+    <form action="/reservations" method="POST">
+        <input type="number" name="catwayNumber" placeholder="N° Catway" required>
+        <input type="text" name="clientName" placeholder="Nom du client" required>
+        <input type="text" name="boatName" placeholder="Nom du bateau" required>
+        <input type="date" name="startDate" required>
+        <input type="date" name="endDate" required>
+        <button type="submit">Réserver</button>
+    </form>
+    <br>
+
+    <!-- TABLEAU DES RÉSERVATIONS -->
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Catway N°</th>
+                <th>Client</th>
+                <th>Bateau</th>
+                <th>Début</th>
+                <th>Fin</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% reservations.forEach(res => { %>
+                <tr>
+                    <td><%= res.catwayNumber %></td>
+                    <td><%= res.clientName %></td>
+                    <td><%= res.boatName %></td>
+                    <td><%= new Date(res.startDate).toLocaleDateString('fr-FR') %></td>
+                    <td><%= new Date(res.endDate).toLocaleDateString('fr-FR') %></td>
+                    <td>
+                        <form action="/reservations/<%= res._id %>?_method=DELETE" method="POST" style="display:inline;">
+                            <button type="submit">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+</body>
+</html>
